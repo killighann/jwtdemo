@@ -12,6 +12,7 @@ class JWTCreatedListener
      */
     private $requestStack;
 
+
     /**
      * @param RequestStack $requestStack
      */
@@ -29,8 +30,14 @@ class JWTCreatedListener
     {
         $request = $this->requestStack->getCurrentRequest();
 
+        /**
+         * @var App\Entity\User
+         */
+        $user = $event->getUser();
+
         $payload       = $event->getData();
         $payload['ip'] = $request->getClientIp();
+        $payload['email'] = $user->getEmail();
 
         $event->setData($payload);
 
